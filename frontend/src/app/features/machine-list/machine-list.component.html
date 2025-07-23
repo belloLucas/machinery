@@ -1,0 +1,69 @@
+<mat-card>
+  <mat-card-header class="card-header">
+    <mat-card-title>Dashboard de Máquinas</mat-card-title>
+    <a mat-flat-button color="primary" routerLink="/machines/new">
+      <mat-icon>add</mat-icon>
+      Cadastrar Máquina
+    </a>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-progress-spinner
+        mode="indeterminate"
+        diameter="50"
+      ></mat-progress-spinner>
+    </div>
+
+    <div
+      *ngIf="!isLoading && machines.length > 0"
+      class="table-container mat-elevation-z2"
+    >
+      <table mat-table [dataSource]="machines">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let machine">{{ machine.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>Localização</th>
+          <td mat-cell *matCellDef="let machine">{{ machine.location }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let machine">
+            <mat-chip-listbox>
+              <mat-chip [color]="getStatusColor(machine.status)" selected>{{
+                machine.status | uppercase
+              }}</mat-chip>
+            </mat-chip-listbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let machine">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="navigateToDetails(machine.id)"
+              matTooltip="Ver Detalhes"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <div *ngIf="!isLoading && machines.length === 0" class="empty-state">
+      <mat-icon class="empty-icon">precision_manufacturing</mat-icon>
+      <h2>Nenhuma máquina encontrada</h2>
+      <p>Comece cadastrando uma nova máquina para visualizá-la aqui.</p>
+    </div>
+  </mat-card-content>
+</mat-card>
