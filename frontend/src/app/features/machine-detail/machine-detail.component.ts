@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatListModule,
     MatChipsModule,
     MatTooltipModule,
+    RouterLink,
   ],
   templateUrl: './machine-detail.component.html',
   styleUrl: './machine-detail.component.scss',
