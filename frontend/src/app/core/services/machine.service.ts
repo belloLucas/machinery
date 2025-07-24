@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Machine } from '../models/machine.model';
+import { UpdateMachineDto } from '../dto/UpdateMachineDTO';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,9 @@ export class MachineService {
     machine: Omit<Machine, 'id' | 'createdAt' | 'updatedAt'>
   ): Observable<Machine> {
     return this.http.post<Machine>(this.apiUrl, machine);
+  }
+
+  updateMachine(id: string, machine: UpdateMachineDto): Observable<Machine> {
+    return this.http.patch<Machine>(`${this.apiUrl}/${id}`, machine);
   }
 }
