@@ -5,7 +5,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { MachineService } from '../../core/services/machine.service';
@@ -39,14 +39,20 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class MachineFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private machineService = inject(MachineService);
   private snackBar = inject(MatSnackBar);
 
   public machineForm!: FormGroup;
   public machineStatusOptions = Object.values(MachineStatus);
   public isSubmitting = false;
+  public isEditMode = false;
+  public machineId: string | null = null;
 
   ngOnInit(): void {
+    this.machineId = this.route.snapshot.paramMap.get('id');
+    this.isEditMode = !!this.machineId;
+
     this.machineForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(100)]],
       location: ['', [Validators.required, Validators.maxLength(200)]],
@@ -70,6 +76,10 @@ export class MachineFormComponent implements OnInit {
       ],
       status: [MachineStatus.OFF, Validators.required],
     });
+
+    if (this.isEditMode && this.machineId) {
+      this.loadMachineData(this.machineId);
+    }
   }
 
   onSubmit(): void {
@@ -79,26 +89,54 @@ export class MachineFormComponent implements OnInit {
     }
 
     this.isSubmitting = true;
-    this.machineService.createMachine(this.machineForm.value).subscribe({
-      next: () => {
-        this.snackBar.open('Máquina cadastrada com sucesso!', 'Fechar', {
-          duration: 3000,
-          panelClass: 'success-snackbar',
-        });
-        this.router.navigate(['/machines']);
-      },
-      error: (err) => {
-        console.error('Failed to create machine', err);
-        this.snackBar.open(
-          'Erro ao cadastrar máquina. Tente novamente.',
-          'Fechar',
-          {
+    const formValue = this.machineForm.value;
+
+    if (this.isEditMode && this.machineId) {
+      this.machineService.updateMachine(this.machineId, formValue).subscribe({
+        next: () => {
+          this.snackBar.open('Máquina atualizada com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: 'success-snackbar',
+          });
+          this.router.navigate(['/machines', this.machineId]);
+        },
+        error: (err) => {
+          console.error('Falha ao atualizar máquina', err);
+          this.snackBar.open('Erro ao atualizar máquina.', 'Fechar', {
             duration: 5000,
             panelClass: 'error-snackbar',
-          }
-        );
-        this.isSubmitting = false;
-      },
+          });
+          this.isSubmitting = false;
+        },
+      });
+    } else {
+      this.machineService.createMachine(this.machineForm.value).subscribe({
+        next: () => {
+          this.snackBar.open('Máquina cadastrada com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: 'success-snackbar',
+          });
+          this.router.navigate(['/machines']);
+        },
+        error: (err) => {
+          console.error('Failed to create machine', err);
+          this.snackBar.open(
+            'Erro ao cadastrar máquina. Tente novamente.',
+            'Fechar',
+            {
+              duration: 5000,
+              panelClass: 'error-snackbar',
+            }
+          );
+          this.isSubmitting = false;
+        },
+      });
+    }
+  }
+
+  loadMachineData(id: string): void {
+    this.machineService.getMachineById(id).subscribe((data) => {
+      this.machineForm.patchValue(data);
     });
   }
 
