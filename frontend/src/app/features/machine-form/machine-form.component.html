@@ -4,10 +4,16 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     <div class="header-text">
-      <mat-card-title>Cadastrar Nova Máquina</mat-card-title>
-      <mat-card-subtitle
-        >Preencha os dados abaixo para registrar uma máquina.</mat-card-subtitle
-      >
+      <mat-card-title>
+        {{ isEditMode ? "Editar Máquina" : "Cadastrar Nova Máquina" }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{
+          isEditMode
+            ? "Altere os dados da máquina abaixo."
+            : "Preencha os dados para registrar uma máquina."
+        }}
+      </mat-card-subtitle>
     </div>
   </mat-card-header>
 
@@ -95,8 +101,12 @@
           type="submit"
           [disabled]="isSubmitting || machineForm.invalid"
         >
-          <span *ngIf="!isSubmitting">Salvar Máquina</span>
-          <span *ngIf="isSubmitting">Salvando...</span>
+          <span *ngIf="!isSubmitting">
+            {{ isEditMode ? "Salvar Alterações" : "Salvar Máquina" }}
+          </span>
+          <span *ngIf="isSubmitting">
+            {{ isEditMode ? "Salvando..." : "Salvando..." }}
+          </span>
         </button>
       </mat-card-actions>
     </form>
