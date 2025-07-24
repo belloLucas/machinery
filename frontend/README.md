@@ -1,59 +1,91 @@
-# Frontend
+# Machinery Management - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+Esta é a aplicação frontend para o sistema de Gerenciamento de Máquinas, construída com Angular e Angular Material. A interface permite que os usuários visualizem, cadastrem, editem e vejam detalhes das máquinas, consumindo a [API de backend]().
 
-## Development server
+## ✨ Features
 
-To start a local development server, run:
+- **Dashboard Interativa**: Lista todas as máquinas cadastradas com status visual e acesso rápido aos detalhes.
+- **Cadastro e Edição**: Formulário reativo e unificado para criar e atualizar máquinas, com validação de dados em tempo real.
+- **Página de Detalhes**: Exibe informações completas de uma máquina, incluindo um mapa interativo do Google Maps com sua localização.
+- **Design Responsivo**: Interface adaptável para diferentes tamanhos de tela.
+- **Feedback ao Usuário**: Indicadores de carregamento (spinners) e notificações (snackbars) para uma experiência de usuário mais clara.
+- **Roteamento Completo**: Navegação bem definida entre as páginas da aplicação.
 
-```bash
-ng serve
+## 🛠️ Tecnologias Utilizadas
+
+- [Angular](https://angular.io/) (v19+)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Angular Material](https://material.angular.io/)
+- [SCSS](https://sass-lang.com/)
+- [RxJS](https://rxjs.dev/)
+
+## 🚀 Começando
+
+Siga estas instruções para configurar e executar o projeto em seu ambiente local.
+
+### Pré-requisitos
+
+- [Node.js](https://nodejs.org/en/) (v18 ou superior)
+- [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
+- A **API de backend** do projeto deve estar em execução (normalmente em `http://localhost:3000`).
+
+### Instalação
+
+1.  Navegue até a pasta do frontend no seu terminal:
+
+    ```bash
+    cd machinery/frontend
+    ```
+
+2.  Instale as dependências do projeto:
+    ```bash
+    npm install
+    ```
+
+### Executando a Aplicação
+
+1.  Inicie o servidor de desenvolvimento do Angular:
+
+    ```bash
+    npm start
+    ```
+
+    ou
+
+    ```bash
+    ng serve
+    ```
+
+2.  Abra seu navegador e acesse `http://localhost:4200/`.
+
+A aplicação usa um proxy (`proxy.conf.json`) para redirecionar as chamadas de `/api` para o backend em `http://localhost:3000`, evitando problemas de CORS durante o desenvolvimento.
+
+## 📁 Estrutura do Projeto
+
+A estrutura de pastas foi organizada para separar responsabilidades e facilitar a manutenção:
+
+```
+src/app/
+├── core/
+│   ├── models/       # Interfaces e Enums (Machine, MachineStatus)
+│   ├── dto/          # Data Transfer Objects para a API
+│   └── services/     # Serviços para comunicação com a API (MachineService)
+│
+├── features/
+│   ├── machine-list/   # Componente da Dashboard
+│   ├── machine-detail/ # Componente da página de Detalhes
+│   └── machine-form/   # Componente do formulário de Criar/Editar
+│
+├── app.component.*   # Componente raiz (layout principal com toolbar)
+├── app.config.ts     # Configuração da aplicação (HttpClient, etc.)
+└── app.routes.ts     # Definição das rotas de navegação
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 📜 Scripts Disponíveis
 
-## Code scaffolding
+No diretório do projeto, você pode executar:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `npm start`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Compila a aplicação para produção na pasta `dist/`.
+- `npm test`: Executa os testes unitários via Karma.
+- `npm run watch`: Compila em modo de desenvolvimento e observa as alterações nos arquivos.
