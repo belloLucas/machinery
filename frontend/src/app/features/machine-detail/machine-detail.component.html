@@ -1,0 +1,83 @@
+<div *ngIf="isLoading" class="loading-container">
+  <mat-progress-spinner
+    mode="indeterminate"
+    diameter="50"
+  ></mat-progress-spinner>
+</div>
+
+<div *ngIf="!isLoading && error" class="error-container">
+  <mat-icon class="error-icon">error_outline</mat-icon>
+  <h2>Erro ao Carregar</h2>
+  <p>{{ error }}</p>
+  <button mat-flat-button color="primary" (click)="goBack()">
+    Voltar para a Dashboard
+  </button>
+</div>
+
+<div *ngIf="!isLoading && machine" class="detail-container">
+  <mat-card class="detail-card">
+    <mat-card-header class="card-header">
+      <button mat-icon-button (click)="goBack()" matTooltip="Voltar">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <mat-card-title>{{ machine.name }}</mat-card-title>
+        <mat-card-subtitle>Detalhes completos da máquina</mat-card-subtitle>
+      </div>
+      <span class="spacer"></span>
+      <mat-chip-listbox>
+        <mat-chip [color]="getStatusColor(machine.status)" selected>{{
+          machine.status | uppercase
+        }}</mat-chip>
+      </mat-chip-listbox>
+    </mat-card-header>
+
+    <mat-card-content class="card-content">
+      <div class="info-section">
+        <h3>Informações Gerais</h3>
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <mat-icon matListItemIcon>location_on</mat-icon>
+            <div matListItemTitle>Localização</div>
+            <div matListItemLine>{{ machine.location }}</div>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-icon matListItemIcon>my_location</mat-icon>
+            <div matListItemTitle>Coordenadas</div>
+            <div matListItemLine>
+              Lat: {{ machine.latitude }}, Lon: {{ machine.longitude }}
+            </div>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-icon matListItemIcon>today</mat-icon>
+            <div matListItemTitle>Data de Cadastro</div>
+            <div matListItemLine>
+              {{ machine.createdAt | date : "dd/MM/yyyy HH:mm" }}
+            </div>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-icon matListItemIcon>update</mat-icon>
+            <div matListItemTitle>Última Atualização</div>
+            <div matListItemLine>
+              {{ machine.updatedAt | date : "dd/MM/yyyy HH:mm" }}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+      <div class="map-section">
+        <h3>Localização no Mapa</h3>
+        <div class="map-container" *ngIf="mapUrl">
+          <iframe
+            [src]="mapUrl"
+            width="100%"
+            height="100%"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
