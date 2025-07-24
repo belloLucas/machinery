@@ -1,6 +1,6 @@
 # Machinery Management - Frontend
 
-Esta é a aplicação frontend para o sistema de Gerenciamento de Máquinas, construída com Angular e Angular Material. A interface permite que os usuários visualizem, cadastrem, editem e vejam detalhes das máquinas, consumindo a [API de backend]().
+Esta é a aplicação frontend para o sistema de Gerenciamento de Máquinas, construída com Angular e Angular Material. A interface permite que os usuários visualizem, cadastrem, editem e vejam detalhes das máquinas, consumindo a [API de backend](https://github.com/belloLucas/machinery/blob/main/api/README.md).
 
 ## ✨ Features
 
