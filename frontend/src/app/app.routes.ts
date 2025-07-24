@@ -26,6 +26,14 @@ export const routes: Routes = [
     title: 'Detalhes da Máquina',
   },
   {
+    path: 'machines/:id/edit',
+    loadComponent: () =>
+      import('./features/machine-form/machine-form.component').then(
+        (m) => m.MachineFormComponent
+      ),
+    title: 'Editar Máquina',
+  },
+  {
     path: '',
     redirectTo: '/machines',
     pathMatch: 'full',
