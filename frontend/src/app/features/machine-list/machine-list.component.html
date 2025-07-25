@@ -8,6 +8,21 @@
   </mat-card-header>
 
   <mat-card-content>
+    <div class="filter-container">
+      <mat-button-toggle-group
+        value="all"
+        (valueChange)="loadMachines($event)"
+        aria-label="Filtro de Status"
+      >
+        <mat-button-toggle
+          *ngFor="let status of statusOptions"
+          [value]="status"
+        >
+          {{ status | uppercase }}
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
     <div *ngIf="isLoading" class="loading-container">
       <mat-progress-spinner
         mode="indeterminate"
