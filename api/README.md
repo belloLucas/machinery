@@ -47,7 +47,7 @@ Siga estas instruções para configurar e executar o projeto em seu ambiente loc
     Em seguida, edite o arquivo `.env` com as credenciais do seu banco de dados PostgreSQL.
 
     ```env
-    # filepath: c:\workspace\machinery\api\.env
+    # filepath: /machinery/api/.env
     PORT=3000
     DB_HOST=localhost
     DB_PORT=5432

@@ -34,7 +34,7 @@ Esta é a maneira mais simples de executar todo o ambiente (frontend, backend e 
 
 ### Execução
 
-1.  Na raiz do projeto (`c:/workspace/machinery`), execute o seguinte comando:
+1.  Na raiz do projeto (`/machinery`), execute o seguinte comando:
 
     ```bash
     docker-compose up --build
