@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Machine } from '../models/machine.model';
@@ -13,8 +13,13 @@ export class MachineService {
 
   constructor(private http: HttpClient) {}
 
-  getMachines(): Observable<Machine[]> {
-    return this.http.get<Machine[]>(this.apiUrl);
+  getMachines(status?: string): Observable<Machine[]> {
+    let params = new HttpParams();
+    if (status) {
+      params = params.append('status', status);
+    }
+
+    return this.http.get<Machine[]>(this.apiUrl, { params });
   }
 
   getMachineById(id: string): Observable<Machine> {
